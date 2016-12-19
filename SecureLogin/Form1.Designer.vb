@@ -34,6 +34,7 @@ Partial Class Form1
         Me.TableTableAdapter = New SecureLogin.LogInDBDataSetTableAdapters.TableTableAdapter()
         Me.LogInDBDataSet = New SecureLogin.LogInDBDataSet()
         Me.LogInDBDataSetBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.Message = New System.Windows.Forms.Label()
         CType(Me.BindingSource1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LogInDBDataSet1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LogInDBDataSet, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -43,7 +44,7 @@ Partial Class Form1
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(38, 33)
+        Me.Label1.Location = New System.Drawing.Point(5, 10)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(58, 13)
         Me.Label1.TabIndex = 0
@@ -52,7 +53,7 @@ Partial Class Form1
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(38, 75)
+        Me.Label2.Location = New System.Drawing.Point(5, 42)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(56, 13)
         Me.Label2.TabIndex = 1
@@ -60,21 +61,21 @@ Partial Class Form1
         '
         'UsernameInput
         '
-        Me.UsernameInput.Location = New System.Drawing.Point(100, 33)
+        Me.UsernameInput.Location = New System.Drawing.Point(67, 10)
         Me.UsernameInput.Name = "UsernameInput"
         Me.UsernameInput.Size = New System.Drawing.Size(250, 20)
         Me.UsernameInput.TabIndex = 2
         '
         'PasswordInput
         '
-        Me.PasswordInput.Location = New System.Drawing.Point(100, 72)
+        Me.PasswordInput.Location = New System.Drawing.Point(67, 39)
         Me.PasswordInput.Name = "PasswordInput"
         Me.PasswordInput.Size = New System.Drawing.Size(250, 20)
         Me.PasswordInput.TabIndex = 3
         '
         'RegisterBtn
         '
-        Me.RegisterBtn.Location = New System.Drawing.Point(100, 107)
+        Me.RegisterBtn.Location = New System.Drawing.Point(66, 91)
         Me.RegisterBtn.Name = "RegisterBtn"
         Me.RegisterBtn.Size = New System.Drawing.Size(75, 23)
         Me.RegisterBtn.TabIndex = 4
@@ -83,7 +84,7 @@ Partial Class Form1
         '
         'SubmitBtn
         '
-        Me.SubmitBtn.Location = New System.Drawing.Point(275, 107)
+        Me.SubmitBtn.Location = New System.Drawing.Point(243, 91)
         Me.SubmitBtn.Name = "SubmitBtn"
         Me.SubmitBtn.Size = New System.Drawing.Size(75, 23)
         Me.SubmitBtn.TabIndex = 5
@@ -114,11 +115,21 @@ Partial Class Form1
         Me.LogInDBDataSetBindingSource.DataSource = Me.LogInDBDataSet
         Me.LogInDBDataSetBindingSource.Position = 0
         '
+        'Message
+        '
+        Me.Message.AutoSize = True
+        Me.Message.Location = New System.Drawing.Point(8, 73)
+        Me.Message.Name = "Message"
+        Me.Message.Size = New System.Drawing.Size(50, 13)
+        Me.Message.TabIndex = 6
+        Me.Message.Text = "Message"
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(371, 149)
+        Me.ClientSize = New System.Drawing.Size(331, 119)
+        Me.Controls.Add(Me.Message)
         Me.Controls.Add(Me.SubmitBtn)
         Me.Controls.Add(Me.RegisterBtn)
         Me.Controls.Add(Me.PasswordInput)
@@ -126,7 +137,7 @@ Partial Class Form1
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.Label1)
         Me.Name = "Form1"
-        Me.Text = "Secure log in with hashing"
+        Me.Text = "Secure log in"
         CType(Me.BindingSource1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LogInDBDataSet1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LogInDBDataSet, System.ComponentModel.ISupportInitialize).EndInit()
@@ -147,4 +158,5 @@ Partial Class Form1
     Friend WithEvents TableTableAdapter As LogInDBDataSetTableAdapters.TableTableAdapter
     Friend WithEvents LogInDBDataSetBindingSource As BindingSource
     Friend WithEvents LogInDBDataSet As LogInDBDataSet
+    Friend WithEvents Message As Label
 End Class
