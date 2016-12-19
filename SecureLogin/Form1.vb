@@ -39,15 +39,11 @@ Public Class Form1
             End If
             Dim UsernameInputStr As String = UsernameInput.Text
             Dim PasswordInputStr As String = PasswordInput.Text
-            For Each dTable As DataTable In LogInDBDataSet1.Tables
-                For Each dRow As DataRow In dTable.Rows
-                    For index As Integer = 0 To dTable.Columns.Count - 1
-                        If Convert.ToString(dRow(index)).Contains(UsernameInputStr) Then
-                            Throw New ApplicationException("Username in use")
-                        End If
-                    Next
-                Next
-            Next
+            Dim expression As String = "Username = '" & UsernameInputStr & "'"
+            Dim LogIn As DataRow() = LogInDBDataSet1.Table.Select(expression)
+            If LogIn.Length <> 0 Then
+                Throw New ApplicationException("Username in use")
+            End If
             Dim rngCSP As New RNGCryptoServiceProvider()
             Dim Salt As String = rngCSP.GetHashCode()
             Dim SaltandPass As String = Salt & PasswordInputStr
