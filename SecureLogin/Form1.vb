@@ -1,4 +1,5 @@
 ﻿Imports System.Security.Cryptography
+Imports System.Text
 
 Public Class Form1
 
@@ -45,14 +46,29 @@ Public Class Form1
                 Throw New ApplicationException("Username in use")
             End If
             Dim rngCSP As New RNGCryptoServiceProvider()
-            Dim Salt As String = rngCSP.GetHashCode()
-            Dim SaltandPass As String = Salt & PasswordInputStr
-            Dim hashPass As String = SaltandPass.GetHashCode()
+            Dim saltyArray = New Byte(25) {}
+            rngCSP.GetNonZeroBytes(saltyArray)
+            Dim passByteArray As Byte() = Encoding.UTF8.GetBytes(PasswordInputStr)
+            Dim hashingArray As Byte() = New Byte(PasswordInputStr.Length + 25) {}
+            Dim i As Integer
+            For i = 0 To PasswordInputStr.Length - 1
+                hashingArray(i) = passByteArray(i)
+            Next i
+            For i = 0 To saltyArray.Length - 1
+                hashingArray(passByteArray.Length + i) = saltyArray(i)
+            Next i
+            Dim hasher As HashAlgorithm = New MD5CryptoServiceProvider()
+            hasher.ComputeHash(hashingArray)
             Dim newLogIn As LogInDBDataSet.TableRow
             newLogIn = LogInDBDataSet1.Table.NewRow
-            newLogIn.PaswordHash = hashPass
+            newLogIn.PaswordHash = hashingArray.ToString
             newLogIn.Username = UsernameInputStr
-            newLogIn.Salt = Salt
+            Dim hashedPassString As String = ""
+            For i = 0 To hashingArray.Length - 1
+                hashedPassString = hashedPassString & hashingArray(i)
+            Next i
+            newLogIn.Salt = hashedPassString
+            MessageBox.Show(hashedPassString)
             LogInDBDataSet1.Table.Rows.Add(newLogIn)
             TableTableAdapter.Update(LogInDBDataSet1.Table)
             Message.ForeColor = Color.Green

@@ -70,6 +70,7 @@ Partial Class Form1
         '
         Me.PasswordInput.Location = New System.Drawing.Point(67, 39)
         Me.PasswordInput.Name = "PasswordInput"
+        Me.PasswordInput.PasswordChar = Global.Microsoft.VisualBasic.ChrW(8226)
         Me.PasswordInput.Size = New System.Drawing.Size(250, 20)
         Me.PasswordInput.TabIndex = 3
         '
