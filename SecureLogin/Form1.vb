@@ -16,10 +16,21 @@ Public Class Form1
                 Throw New ApplicationException("Login failed")
             End If
             Dim passwordInputStr As String = PasswordInput.Text
+            Dim passByteArray As Byte() = Encoding.UTF8.GetBytes(passwordInputStr)
             Dim Salt As String = LogIn(0).Item(3)
-            Dim SaltandPass As String = Salt & passwordInputStr
-            Dim hashPass As String = SaltandPass.GetHashCode()
-            If hashPass = LogIn(0).Item(2) Then
+            Dim saltyArray As Byte() = Convert.FromBase64String(Salt)
+            Dim hashingArray As Byte() = New Byte(passByteArray.Length + saltyArray.Length) {}
+            Dim i As Integer
+            For i = 0 To passwordInputStr.Length - 1
+                hashingArray(i) = passByteArray(i)
+            Next i
+            For i = 0 To saltyArray.Length - 1
+                hashingArray(passByteArray.Length + i) = saltyArray(i)
+            Next i
+            Dim hasher As HashAlgorithm = New MD5CryptoServiceProvider()
+            hashingArray = hasher.ComputeHash(hashingArray)
+            Dim hashedPass As String = Convert.ToBase64String(hashingArray)
+            If hashedPass = LogIn(0).Item(2) Then
                 Message.ForeColor = Color.Green
                 Message.Text = "Log in successful!"
                 Message.Visible = True
@@ -49,7 +60,7 @@ Public Class Form1
             Dim saltyArray = New Byte(25) {}
             rngCSP.GetNonZeroBytes(saltyArray)
             Dim passByteArray As Byte() = Encoding.UTF8.GetBytes(PasswordInputStr)
-            Dim hashingArray As Byte() = New Byte(PasswordInputStr.Length + 25) {}
+            Dim hashingArray As Byte() = New Byte(passByteArray.Length + saltyArray.Length) {}
             Dim i As Integer
             For i = 0 To PasswordInputStr.Length - 1
                 hashingArray(i) = passByteArray(i)
@@ -58,17 +69,12 @@ Public Class Form1
                 hashingArray(passByteArray.Length + i) = saltyArray(i)
             Next i
             Dim hasher As HashAlgorithm = New MD5CryptoServiceProvider()
-            hasher.ComputeHash(hashingArray)
+            hashingArray = hasher.ComputeHash(hashingArray)
             Dim newLogIn As LogInDBDataSet.TableRow
             newLogIn = LogInDBDataSet1.Table.NewRow
-            newLogIn.PaswordHash = hashingArray.ToString
+            newLogIn.PaswordHash = Convert.ToBase64String(hashingArray)
             newLogIn.Username = UsernameInputStr
-            Dim hashedPassString As String = ""
-            For i = 0 To hashingArray.Length - 1
-                hashedPassString = hashedPassString & hashingArray(i)
-            Next i
-            newLogIn.Salt = hashedPassString
-            MessageBox.Show(hashedPassString)
+            newLogIn.Salt = Convert.ToBase64String(saltyArray)
             LogInDBDataSet1.Table.Rows.Add(newLogIn)
             TableTableAdapter.Update(LogInDBDataSet1.Table)
             Message.ForeColor = Color.Green
