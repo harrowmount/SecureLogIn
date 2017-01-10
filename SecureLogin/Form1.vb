@@ -3,6 +3,9 @@ Imports System.Text
 
 Public Class Form1
 
+    'Amount of times to hash in order to slow program and protect against brute force attacks
+    Private Const HashingIterations As Integer = 500000
+
     'Register subroutine:
     'Gets user inputs and hashes the password with a salt. Stores the username, hashed pass+salt, and salt
     'in the DB together.
@@ -38,7 +41,9 @@ Public Class Form1
             Next i
             'Create MD5CryptoServiceProvider() object to hash the array
             Dim hasher As HashAlgorithm = New MD5CryptoServiceProvider()
-            hashingArray = hasher.ComputeHash(hashingArray)
+            For i = 0 To HashingIterations
+                hashingArray = hasher.ComputeHash(hashingArray)
+            Next
             'Begin inputing the hashed array, salt array and username into a tablerow so they can be put into
             'the DB. Converted to strings first as DB only accepts strings
             Dim newLogIn As LogInDBDataSet.TableRow
@@ -66,7 +71,7 @@ Public Class Form1
     Private Sub SubmitBtn_Click(sender As Object, e As EventArgs) Handles SubmitBtn.Click
         Try
             'Checks fields are filled
-            If UsernameInput.Text.Replace(" ", "") = Nothing Or PasswordInput.Text.Replace(" ", "") = Nothing Then
+            If UsernameInput.Text.Replace(" ", "") = Nothing OrElse PasswordInput.Text.Replace(" ", "") = Nothing Then
                 Throw New ApplicationException("All fields must be filled")
             End If
             'Looks up username in DB and returns the correct row
@@ -95,7 +100,9 @@ Public Class Form1
             Next i
             'Create MD5CryptoServiceProvider() object in order to hash the new array
             Dim hasher As HashAlgorithm = New MD5CryptoServiceProvider()
-            hashingArray = hasher.ComputeHash(hashingArray)
+            For i = 0 To HashingIterations
+                hashingArray = hasher.ComputeHash(hashingArray)
+            Next
             'Convert hashed array into a string and compare it with the one in the DB
             Dim hashedPass As String = Convert.ToBase64String(hashingArray)
             If hashedPass = LogIn(0).Item(2) Then
