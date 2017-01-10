@@ -3,8 +3,10 @@ Imports System.Text
 
 Public Class Form1
 
-    'Amount of times to hash in order to slow program and protect against brute force attacks
+    'Amount of times to hash in order to slow program and protect against brute force attacks, bigger the number the slower it will go
     Private Const HashingIterations As Integer = 500000
+    'Length of salts generated, anything above 74 will break the program
+    Private Const SaltLength As Integer = 74
 
     'Register subroutine:
     'Gets user inputs and hashes the password with a salt. Stores the username, hashed pass+salt, and salt
@@ -26,7 +28,7 @@ Public Class Form1
             End If
             'Generate 25 length salt
             Dim rngCSP As New RNGCryptoServiceProvider()
-            Dim saltyArray = New Byte(25) {}
+            Dim saltyArray = New Byte(SaltLength) {}
             rngCSP.GetNonZeroBytes(saltyArray)
             'Convert password input into byte array so it can be hashed, hashing only accepts byte arrays
             Dim passByteArray As Byte() = Encoding.UTF8.GetBytes(PasswordInputStr)
@@ -39,8 +41,8 @@ Public Class Form1
             For i = 0 To saltyArray.Length - 1
                 hashingArray(passByteArray.Length + i) = saltyArray(i)
             Next i
-            'Create MD5CryptoServiceProvider() object to hash the array
-            Dim hasher As HashAlgorithm = New MD5CryptoServiceProvider()
+            'Create SHA512CryptoServiceProvider() object to hash the array
+            Dim hasher As HashAlgorithm = New SHA512CryptoServiceProvider
             For i = 0 To HashingIterations
                 hashingArray = hasher.ComputeHash(hashingArray)
             Next
@@ -57,7 +59,7 @@ Public Class Form1
             Message.ForeColor = Color.Green
             Message.Text = UsernameInputStr & " has been registered!"
             Message.Visible = True
-        Catch ex As ApplicationException
+        Catch ex As Exception
             'Show error message to user
             Message.Text = ex.Message
             Message.ForeColor = Color.Red
@@ -98,8 +100,8 @@ Public Class Form1
             For i = 0 To saltyArray.Length - 1
                 hashingArray(passByteArray.Length + i) = saltyArray(i)
             Next i
-            'Create MD5CryptoServiceProvider() object in order to hash the new array
-            Dim hasher As HashAlgorithm = New MD5CryptoServiceProvider()
+            'Create SHA512CryptoServiceProvider() object in order to hash the new array
+            Dim hasher As HashAlgorithm = New SHA512CryptoServiceProvider()
             For i = 0 To HashingIterations
                 hashingArray = hasher.ComputeHash(hashingArray)
             Next
@@ -112,7 +114,7 @@ Public Class Form1
             Else
                 Throw New ApplicationException("Login failed")
             End If
-        Catch ex As ApplicationException
+        Catch ex As Exception
             Message.Text = ex.Message
             Message.ForeColor = Color.Red
             Message.Visible = True
