@@ -35,6 +35,8 @@ Partial Class Form1
         Me.LogInDBDataSet = New SecureLogin.LogInDBDataSet()
         Me.LogInDBDataSetBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.Message = New System.Windows.Forms.Label()
+        Me.ProgressBar1 = New System.Windows.Forms.ProgressBar()
+        Me.Label3 = New System.Windows.Forms.Label()
         CType(Me.BindingSource1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LogInDBDataSet1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LogInDBDataSet, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -76,7 +78,7 @@ Partial Class Form1
         '
         'RegisterBtn
         '
-        Me.RegisterBtn.Location = New System.Drawing.Point(66, 91)
+        Me.RegisterBtn.Location = New System.Drawing.Point(8, 65)
         Me.RegisterBtn.Name = "RegisterBtn"
         Me.RegisterBtn.Size = New System.Drawing.Size(75, 23)
         Me.RegisterBtn.TabIndex = 4
@@ -85,7 +87,7 @@ Partial Class Form1
         '
         'SubmitBtn
         '
-        Me.SubmitBtn.Location = New System.Drawing.Point(243, 91)
+        Me.SubmitBtn.Location = New System.Drawing.Point(89, 65)
         Me.SubmitBtn.Name = "SubmitBtn"
         Me.SubmitBtn.Size = New System.Drawing.Size(75, 23)
         Me.SubmitBtn.TabIndex = 5
@@ -119,17 +121,40 @@ Partial Class Form1
         'Message
         '
         Me.Message.AutoSize = True
-        Me.Message.Location = New System.Drawing.Point(8, 73)
+        Me.Message.Location = New System.Drawing.Point(170, 70)
         Me.Message.Name = "Message"
         Me.Message.Size = New System.Drawing.Size(50, 13)
         Me.Message.TabIndex = 6
         Me.Message.Text = "Message"
         '
+        'ProgressBar1
+        '
+        Me.ProgressBar1.Location = New System.Drawing.Point(170, 65)
+        Me.ProgressBar1.MarqueeAnimationSpeed = 0
+        Me.ProgressBar1.Name = "ProgressBar1"
+        Me.ProgressBar1.Size = New System.Drawing.Size(133, 23)
+        Me.ProgressBar1.Step = 0
+        Me.ProgressBar1.Style = System.Windows.Forms.ProgressBarStyle.Continuous
+        Me.ProgressBar1.TabIndex = 7
+        Me.ProgressBar1.Visible = False
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(301, 70)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(27, 13)
+        Me.Label3.TabIndex = 8
+        Me.Label3.Text = "10%"
+        Me.Label3.Visible = False
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(331, 119)
+        Me.ClientSize = New System.Drawing.Size(331, 96)
+        Me.Controls.Add(Me.Label3)
+        Me.Controls.Add(Me.ProgressBar1)
         Me.Controls.Add(Me.Message)
         Me.Controls.Add(Me.SubmitBtn)
         Me.Controls.Add(Me.RegisterBtn)
@@ -160,4 +185,6 @@ Partial Class Form1
     Friend WithEvents LogInDBDataSetBindingSource As BindingSource
     Friend WithEvents LogInDBDataSet As LogInDBDataSet
     Friend WithEvents Message As Label
+    Friend WithEvents ProgressBar1 As ProgressBar
+    Friend WithEvents Label3 As Label
 End Class

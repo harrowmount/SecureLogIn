@@ -1,17 +1,27 @@
 ﻿Imports System.Security.Cryptography
 Imports System.Text
 
+''' <summary>
+''' Form with log in and register buttons aswell as text boxes to input data into the program,
+''' also has a progress bar to show progress of registration/log in
+''' </summary>
 Public Class Form1
 
-    'Amount of times to hash in order to slow program and protect against brute force attacks, bigger the number the slower it will go
-    Private Const HashingIterations As Integer = 1
-    'Length of salts generated
-    Private Const SaltLength As Integer = 512
+    ''' <summary>
+    ''' Amount of times to hash in order to slow program and protect against brute force attacks, 
+    ''' bigger the number the slower it will go
+    ''' </summary>
+    Private Const HashingIterations As Integer = 1000000
+    ''' <summary>
+    ''' Length of salts generated
+    ''' </summary>
+    Private Const SaltLength As Integer = 256
 
-    'Register subroutine:
-    'Gets user inputs and hashes the password with a salt. Stores the username, hashed pass+salt, and salt
-    'in the DB together.
-    Private Sub RegisterBtn_Click(sender As Object, e As EventArgs) Handles RegisterBtn.Click
+    ''' <summary>
+    ''' Gets user inputs and hashes the password with a salt.
+    ''' Stores the username, hashed pass+salt, and salt in the DB together.
+    ''' </summary>
+    Private Sub RegisterBtn_Click() Handles RegisterBtn.Click
         Try
             'Check if both fields are filled
             If UsernameInput.Text.Replace(" ", "") = Nothing OrElse PasswordInput.Text.Replace(" ", "") = Nothing Then
@@ -42,10 +52,26 @@ Public Class Form1
                 hashingArray(passByteArray.Length + i) = saltyArray(i)
             Next i
             'Create SHA512CryptoServiceProvider() object to hash the array
-            Dim hasher As HashAlgorithm = New SHA512CryptoServiceProvider
+            Dim hasher As HashAlgorithm = New SHA512CryptoServiceProvider()
+            Dim incrementAmount As Double = 100 / HashingIterations
+            Dim incrementer As Double = 0
+            ProgressBar1.Visible = True
+            Label3.Visible = True
             For i = 0 To HashingIterations
                 hashingArray = hasher.ComputeHash(hashingArray)
+                incrementer += incrementAmount
+                If incrementer >= 1 Then
+                    ProgressBar1.Increment(1)
+                    ProgressBar1.Update()
+                    Label3.Text = ProgressBar1.Value.ToString & "%"
+                    Label3.Update()
+                    incrementer = 0
+                End If
             Next
+            ProgressBar1.Value = 0
+            ProgressBar1.Visible = False
+            Label3.Text = "0%"
+            Label3.Visible = False
             'Begin inputing the hashed array, salt array and username into a tablerow so they can be put into
             'the DB. Converted to strings first as DB only accepts strings
             Dim newLogIn As LogInDBDataSet.TableRow
@@ -67,10 +93,12 @@ Public Class Form1
         End Try
     End Sub
 
-    'Log in subroutine:
-    'Gets the username and uses it to look the correct row up in the DB. Hashes the password input with the salt
-    'from the the DB row and checks it against the stored hashed password + salt.
-    Private Sub SubmitBtn_Click(sender As Object, e As EventArgs) Handles SubmitBtn.Click
+    ''' <summary>
+    ''' Gets the username and uses it to look the correct row up in the DB.
+    ''' Hashes the password input with the salt from the the DB row and checks it against the stored
+    ''' hashed password + salt.
+    ''' </summary>
+    Private Sub SubmitBtn_Click() Handles SubmitBtn.Click
         Try
             'Checks fields are filled
             If UsernameInput.Text.Replace(" ", "") = Nothing OrElse PasswordInput.Text.Replace(" ", "") = Nothing Then
@@ -102,9 +130,25 @@ Public Class Form1
             Next i
             'Create SHA512CryptoServiceProvider() object in order to hash the new array
             Dim hasher As HashAlgorithm = New SHA512CryptoServiceProvider()
+            Dim incrementAmount As Double = 100 / HashingIterations
+            Dim incrementer As Double = 0
+            ProgressBar1.Visible = True
+            Label3.Visible = True
             For i = 0 To HashingIterations
                 hashingArray = hasher.ComputeHash(hashingArray)
+                incrementer += incrementAmount
+                If incrementer >= 1 Then
+                    ProgressBar1.Increment(1)
+                    ProgressBar1.Update()
+                    Label3.Text = ProgressBar1.Value & "%"
+                    Label3.Update()
+                    incrementer = 0
+                End If
             Next
+            ProgressBar1.Value = 0
+            ProgressBar1.Visible = False
+            Label3.Text = "0%"
+            Label3.Visible = False
             'Convert hashed array into a string and compare it with the one in the DB
             Dim hashedPass As String = Convert.ToBase64String(hashingArray)
             If hashedPass = LogIn(0).Item(2) Then
@@ -122,7 +166,6 @@ Public Class Form1
     End Sub
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        'TODO: This line of code loads data into the 'LogInDBDataSet1.Table' table. You can move, or remove it, as needed.
         TableTableAdapter.Fill(LogInDBDataSet1.Table)
         Message.Text = ""
         Message.Visible = False
