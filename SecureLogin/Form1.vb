@@ -4,9 +4,9 @@ Imports System.Text
 Public Class Form1
 
     'Amount of times to hash in order to slow program and protect against brute force attacks, bigger the number the slower it will go
-    Private Const HashingIterations As Integer = 500000
-    'Length of salts generated, anything above 74 will break the program
-    Private Const SaltLength As Integer = 74
+    Private Const HashingIterations As Integer = 1
+    'Length of salts generated
+    Private Const SaltLength As Integer = 512
 
     'Register subroutine:
     'Gets user inputs and hashes the password with a salt. Stores the username, hashed pass+salt, and salt

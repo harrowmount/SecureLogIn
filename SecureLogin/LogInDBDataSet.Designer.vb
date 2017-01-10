@@ -448,11 +448,8 @@ Partial Public Class LogInDBDataSet
             Me.columnId.AllowDBNull = false
             Me.columnId.Unique = true
             Me.columnUsername.AllowDBNull = false
-            Me.columnUsername.MaxLength = 15
             Me.columnPaswordHash.AllowDBNull = false
-            Me.columnPaswordHash.MaxLength = 100
             Me.columnSalt.AllowDBNull = false
-            Me.columnSalt.MaxLength = 100
             Me.ExtendedProperties.Add("Generator_RowClassName", "TableRow")
             Me.ExtendedProperties.Add("Generator_RowEvArgName", "TableRowChangeEvent")
             Me.ExtendedProperties.Add("Generator_RowEvHandlerName", "TableRowChangeEventHandler")

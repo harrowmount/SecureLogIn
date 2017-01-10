@@ -83,31 +83,13 @@ FROM            [Table]</CommandText>
   <xs:element name="LogInDBDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="True" msprop:Generator_DataSetName="LogInDBDataSet" msprop:Generator_UserDSName="LogInDBDataSet">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="Table" msprop:Generator_TableClassName="TableDataTable" msprop:Generator_TableVarName="tableTable" msprop:Generator_TablePropName="Table" msprop:Generator_RowDeletingName="TableRowDeleting" msprop:Generator_RowChangingName="TableRowChanging" msprop:Generator_RowEvHandlerName="TableRowChangeEventHandler" msprop:Generator_RowDeletedName="TableRowDeleted" msprop:Generator_UserTableName="Table" msprop:Generator_RowChangedName="TableRowChanged" msprop:Generator_RowEvArgName="TableRowChangeEvent" msprop:Generator_RowClassName="TableRow">
+        <xs:element name="Table" msprop:Generator_TableClassName="TableDataTable" msprop:Generator_TableVarName="tableTable" msprop:Generator_RowChangedName="TableRowChanged" msprop:Generator_TablePropName="Table" msprop:Generator_RowDeletingName="TableRowDeleting" msprop:Generator_RowChangingName="TableRowChanging" msprop:Generator_RowEvHandlerName="TableRowChangeEventHandler" msprop:Generator_RowDeletedName="TableRowDeleted" msprop:Generator_RowClassName="TableRow" msprop:Generator_UserTableName="Table" msprop:Generator_RowEvArgName="TableRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="Id" msdata:AutoIncrement="true" msprop:Generator_ColumnVarNameInTable="columnId" msprop:Generator_ColumnPropNameInRow="Id" msprop:Generator_ColumnPropNameInTable="IdColumn" msprop:Generator_UserColumnName="Id" type="xs:int" />
-              <xs:element name="Username" msprop:Generator_ColumnVarNameInTable="columnUsername" msprop:Generator_ColumnPropNameInRow="Username" msprop:Generator_ColumnPropNameInTable="UsernameColumn" msprop:Generator_UserColumnName="Username">
-                <xs:simpleType>
-                  <xs:restriction base="xs:string">
-                    <xs:maxLength value="15" />
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
-              <xs:element name="PaswordHash" msprop:Generator_ColumnVarNameInTable="columnPaswordHash" msprop:Generator_ColumnPropNameInRow="PaswordHash" msprop:Generator_ColumnPropNameInTable="PaswordHashColumn" msprop:Generator_UserColumnName="PaswordHash">
-                <xs:simpleType>
-                  <xs:restriction base="xs:string">
-                    <xs:maxLength value="100" />
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
-              <xs:element name="Salt" msprop:Generator_ColumnVarNameInTable="columnSalt" msprop:Generator_ColumnPropNameInRow="Salt" msprop:Generator_ColumnPropNameInTable="SaltColumn" msprop:Generator_UserColumnName="Salt">
-                <xs:simpleType>
-                  <xs:restriction base="xs:string">
-                    <xs:maxLength value="100" />
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
+              <xs:element name="Username" msprop:Generator_ColumnVarNameInTable="columnUsername" msprop:Generator_ColumnPropNameInRow="Username" msprop:Generator_ColumnPropNameInTable="UsernameColumn" msprop:Generator_UserColumnName="Username" type="xs:string" />
+              <xs:element name="PaswordHash" msprop:Generator_ColumnVarNameInTable="columnPaswordHash" msprop:Generator_ColumnPropNameInRow="PaswordHash" msprop:Generator_ColumnPropNameInTable="PaswordHashColumn" msprop:Generator_UserColumnName="PaswordHash" type="xs:string" />
+              <xs:element name="Salt" msprop:Generator_ColumnVarNameInTable="columnSalt" msprop:Generator_ColumnPropNameInRow="Salt" msprop:Generator_ColumnPropNameInTable="SaltColumn" msprop:Generator_UserColumnName="Salt" type="xs:string" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
