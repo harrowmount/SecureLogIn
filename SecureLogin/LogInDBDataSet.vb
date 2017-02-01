@@ -1,4 +1,2 @@
-﻿
-
-Partial Public Class LogInDBDataSet
+﻿Partial Public Class LogInDBDataSet
 End Class

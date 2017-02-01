@@ -7,8 +7,10 @@ Imports System.Text
 ''' </summary>
 Public Class Form1
 
+#Region "Fields"
+
     ''' <summary>
-    ''' Amount of times to hash in order to slow program and protect against brute force attacks, 
+    ''' Amount of times to hash in order to slow program and protect against brute force attacks,
     ''' bigger the number the slower it will go
     ''' </summary>
     Private Const HashingIterations As Integer = 1000000
@@ -16,6 +18,16 @@ Public Class Form1
     ''' Length of salts generated
     ''' </summary>
     Private Const SaltLength As Integer = 256
+
+#End Region
+
+#Region "Methods"
+
+    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        TableTableAdapter.Fill(LogInDBDataSet1.Table)
+        Message.Text = ""
+        Message.Visible = False
+    End Sub
 
     ''' <summary>
     ''' Gets user inputs and hashes the password with a salt.
@@ -165,9 +177,6 @@ Public Class Form1
         End Try
     End Sub
 
-    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        TableTableAdapter.Fill(LogInDBDataSet1.Table)
-        Message.Text = ""
-        Message.Visible = False
-    End Sub
+#End Region
+
 End Class
